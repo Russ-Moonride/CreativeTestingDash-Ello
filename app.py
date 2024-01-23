@@ -20,7 +20,7 @@ credentials = service_account.Credentials.from_service_account_info(
           st.secrets["gcp_service_account"]
       )
 client = bigquery.Client(credentials=credentials)
-bucket_name = "creativetesting_images"
+bucket_name = "creativetesting_images_ello"
 
 
 def initialize_storage_client():
@@ -40,7 +40,7 @@ def password_protection():
       
   if not st.session_state.authenticated:
       password = st.text_input("Enter Password:", type="password")
-      correct_hashed_password = "Sunpower1234"
+      correct_hashed_password = "Ello1234"
       
       if st.button("Login"):
           if password == correct_hashed_password:
@@ -97,14 +97,14 @@ def get_campaign_value(ad_set, creative_storage_data):
 def update_ad_set_table(new_ad_set_name, campaign_name=None):
     # Query to find the current Ad-Set and Campaign
     query = """
-    SELECT Ad_Set, Campaign FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` WHERE Type = 'Current'
+    SELECT Ad_Set, Campaign FROM `ello-407319.ello_streamlit.CreativeTestingStorage` WHERE Type = 'Current'
     """
     current_ad_set_campaign = pandas.read_gbq(query, credentials=credentials)
 
     # If current Ad-Set exists, update it to 'Past'
     if not current_ad_set_campaign.empty:
         update_query = """
-        UPDATE `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
+        UPDATE `ello-407319.ello_streamlit.CreativeTestingStorage`
         SET Type = 'Past'
         WHERE Ad_Set = @current_ad_set 
         """
@@ -118,7 +118,7 @@ def update_ad_set_table(new_ad_set_name, campaign_name=None):
 
     # Insert the new Ad-Set with Type 'Current'
     insert_query = """
-    INSERT INTO `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` (Ad_Set, Campaign, Type) VALUES (@new_ad_set, @campaign, 'Current')
+    INSERT INTO `ello-407319.ello_streamlit.CreativeTestingStorage` (Ad_Set, Campaign, Type) VALUES (@new_ad_set, @campaign, 'Current')
     """
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
@@ -159,7 +159,7 @@ def delete_ad_set(ad_set_value_to_delete, full_data):
         # SQL statement for deletion
         if ad_set_value_to_delete in full_data['Ad_Set_Name__Facebook_Ads'].values:
                   delete_query = """
-                  DELETE FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage`
+                  DELETE FROM `-375201._streamlit.CreativeTestingStorage`
                   WHERE Ad_Set = @ad_set_value
                   AND Type = 'Past'
                   """
@@ -187,7 +187,7 @@ def process_ad_set_data(data, ad_set, past_test_data):
       'Impressions__Facebook_Ads' : 'Impressions',
       'Link_Clicks__Facebook_Ads' : 'Clicks',
       'Amount_Spent__Facebook_Ads' : 'Cost',
-      'Lead_Submit_SunPower__Facebook_Ads' : 'Leads',
+      'Lead_Submit___Facebook_Ads' : 'Leads',
       'Ad_Effective_Status__Facebook_Ads' : 'Ad_Status',
       'Ad_Preview_Shareable_Link__Facebook_Ads' : 'Ad_Link'
     })
@@ -347,7 +347,7 @@ def main_dashboard():
       client = bigquery.Client(credentials=credentials)
       # Modify the query
       query = f"""
-      SELECT * FROM `sunpower-375201.sunpower_segments.sunpower_platform_ad_level` 
+      SELECT * FROM `ello-407319.ello_Segments.ello_ad_level` 
       WHERE Date BETWEEN '{one_year_ago}' AND CURRENT_DATE() """
       st.session_state.full_data = pandas.read_gbq(query, credentials=credentials)
 
@@ -360,7 +360,7 @@ def main_dashboard():
       client = bigquery.Client(credentials=credentials)
       # Modify the query
       query = f"""
-      SELECT * FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` 
+      SELECT * FROM `ello-407319.ello_streamlit.CreativeTestingStorage` 
       WHERE Type = 'Current'"""
       st.session_state.current_test_data = pandas.read_gbq(query, credentials=credentials)
 
@@ -373,7 +373,7 @@ def main_dashboard():
       client = bigquery.Client(credentials=credentials)
       # Modify the query
       query = f"""
-      SELECT * FROM `sunpower-375201.sunpower_streamlit.CreativeTestingStorage` 
+      SELECT * FROM `ello-407319.ello_streamlit.CreativeTestingStorage` 
       WHERE Type = 'Past'"""
       st.session_state.past_test_data = pandas.read_gbq(query, credentials=credentials)
 
