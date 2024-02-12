@@ -22,8 +22,8 @@ client = bigquery.Client(credentials=credentials)
 #### Information to be changed when switching accounts ###
 Account = "Ello"
 bucket_name = "creativetesting_images_ello" 
-main_table_id = "ello-407319.ello_Segments.ello_ad_level”
-creativetesting_table_id = "ello-407319.ello_streamlit.CreativeTestingStorage”
+main_table_id = "ello-407319.ello_Segments.ello_ad_level"
+creativetesting_table_id = "ello-407319.ello_streamlit.CreativeTestingStorage"
 correct_hashed_password = "CFElloAdTest2059$"
 
 
